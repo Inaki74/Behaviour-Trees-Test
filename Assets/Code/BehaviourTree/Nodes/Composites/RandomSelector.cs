@@ -1,0 +1,15 @@
+using System.Collections.Generic;
+using BehaviourTreeTests.Utility;
+
+namespace BehaviourTreeTests.BehaviorTree.Nodes {
+    public class RandomSelector : Selector {
+        public RandomSelector(List<Node> nodes) : base(nodes) {}
+
+        public override RunStates Run(float deltaTime)
+        {
+            _children.Shuffle<Node>();
+
+            return base.Run(deltaTime);
+        }
+    }
+}

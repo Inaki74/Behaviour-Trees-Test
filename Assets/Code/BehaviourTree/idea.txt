@@ -1,0 +1,36 @@
+Behavior Trees
+
+https://www.gamedeveloper.com/programming/behavior-trees-for-ai-how-they-work
+
+Elements:
+- Monobehavior: "I am the Tree definer, I provide and define the data context. I run the Tree."
+- Tree: "I am the way a Tree is defined, I contain the data context that the nodes use. I run the single root node."
+    - "I shouldn't run the entire tree per update, but rather continue where I left off."
+    - "A string/object dictionary is good for the data context."
+- Nodes
+    - Composite: "I contain N amount of nodes."
+        - Selector (OR)
+        - Sequencer (AND)
+        - Random Sequencer / Selector
+    - Decorators: "I contain a single node."
+        - Inverter (NOT)
+        - Succeeder (TRUE)
+        - Failer (FALSE) (Not necessary, but a bit more efficient that Inverter -> Succeeder)
+        - Repeater (WHILE)
+        - Repeater Until Fail
+    - Leaf: "I contain no nodes."
+        - Generic Leaves:
+            - Push To Stack (item, stackVariableName)
+            - Pop from Stack (itemVariableName, stackVariableName)
+            - Is Stack Empty (stackVariableName)
+            - Set Variable (variableName, value)
+            - Is Null (variableName)
+        - Actions
+            - Logic update
+            - Fixed update
+            - Init
+            - Exit
+- States
+    - Success
+    - Running
+    - Failure
