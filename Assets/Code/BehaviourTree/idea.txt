@@ -18,6 +18,7 @@ Elements:
         - Failer (FALSE) (Not necessary, but a bit more efficient that Inverter -> Succeeder)
         - Repeater (WHILE)
         - Repeater Until Fail
+        - Timer
     - Leaf: "I contain no nodes."
         - Generic Leaves:
             - Push To Stack (item, stackVariableName)
