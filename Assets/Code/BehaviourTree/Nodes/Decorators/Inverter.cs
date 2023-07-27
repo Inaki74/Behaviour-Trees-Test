@@ -1,18 +1,26 @@
 namespace BehaviourTreeTests.BehaviorTree.Nodes {
     public class Inverter : Decorator {
-        public Inverter(Node node) : base(node) {}
+        public Inverter(DataContext context, Node node) : base(context, node) {}
 
-        public override RunStates Run(float deltaTime)
+        protected override RunStates InternalRun(float deltaTime)
         {
+            ResetIfNecessary();
+
             RunStates result = _child.Run(deltaTime);
 
-            if(result == RunStates.FAILURE)
+            if(result == RunStates.FAILURE){
                 return RunStates.SUCCESS;
+            }
 
-            if(result == RunStates.SUCCESS)
+            if(result == RunStates.SUCCESS){
                 return RunStates.FAILURE;
-
+            }
+            
             return RunStates.RUNNING;
+        }
+        public override string ToString()
+        {
+            return "Inverter";
         }
     }
 }

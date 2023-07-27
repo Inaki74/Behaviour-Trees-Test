@@ -1,16 +1,22 @@
 namespace BehaviourTreeTests.BehaviorTree.Nodes {
-    public class RepeateUntilFail : Decorator {
-        public RepeateUntilFail(Node node) : base(node) {}
+    public class RepeatUntilFail : Decorator {
+        public RepeatUntilFail(DataContext context, Node node) : base(context, node) {}
 
-        public override RunStates Run(float deltaTime)
+        protected override RunStates InternalRun(float deltaTime)
         {
+            ResetIfNecessary();
+
             RunStates result = _child.Run(deltaTime);
 
             if(result == RunStates.FAILURE) {
-                return result;
+                return RunStates.SUCCESS;
             }
 
             return RunStates.RUNNING;
+        }
+        public override string ToString()
+        {
+            return "RepeatUntilFail";
         }
     }
 }

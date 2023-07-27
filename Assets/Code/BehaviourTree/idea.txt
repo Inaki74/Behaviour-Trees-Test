@@ -7,17 +7,27 @@ Elements:
 - Tree: "I am the way a Tree is defined, I contain the data context that the nodes use. I run the single root node."
     - "I shouldn't run the entire tree per update, but rather continue where I left off."
     - "A string/object dictionary is good for the data context."
+    Implementation IDEA 1:
+        - Every node has a "result" property that is set to their last result in the execution.
+        - The tree will ignore all nodes that have SUCCESS or FAILURE results running only nodes that have RUNNING or NOTYETRUN states.
+        - This will make it so that it wont run all the tree again.
+        - Nodes will need to implement RESET method to undo the result property. This is especially apparent in REPEATER nodes since they will always run. 
+          Once all children are either SUCCESS or FAILURE, RESET them all.
+        - Tradeoffs and pros:
+            - We are still traversing the tree, just ignoring execution of some. Small performance dip.
+            - We are making use of recurssion which is efficient in dev time.
+            - O(n) worst case.
 - Nodes
     - Composite: "I contain N amount of nodes."
-        - Selector (OR)
-        - Sequencer (AND)
-        - Random Sequencer / Selector
+        - Selector (OR) D
+        - Sequencer (AND) D
+        - Random Sequencer / Selector D
     - Decorators: "I contain a single node."
-        - Inverter (NOT)
-        - Succeeder (TRUE)
+        - Inverter (NOT) D
+        - Succeeder (TRUE) D
         - Failer (FALSE) (Not necessary, but a bit more efficient that Inverter -> Succeeder)
-        - Repeater (WHILE)
-        - Repeater Until Fail
+        - Repeater (WHILE) D
+        - Repeater Until Fail D
         - Timer
     - Leaf: "I contain no nodes."
         - Generic Leaves:
@@ -35,3 +45,4 @@ Elements:
     - Success
     - Running
     - Failure
+    - NotYetRun

@@ -1,15 +1,21 @@
 using System.Collections.Generic;
 
-namespace BehaviourTreeTests.BehaviorTree.Nodes {
-    public class Selector : Composite {
-        public Selector(List<Node> nodes) : base(nodes) {}
+namespace BehaviourTreeTests.BehaviorTree.Nodes
+{
+    public class Selector : Composite
+    {
+        public Selector(DataContext context, List<Node> nodes) : base(context, nodes) { }
 
-        public override RunStates Run(float deltaTime)
+        protected override RunStates InternalRun(float deltaTime)
         {
-            for(int i = 0; i < this._children.Count; i++) {
+            ResetChildrenIfNecessary();
+
+            for (int i = 0; i < this._children.Count; i++)
+            {
                 RunStates result = _children[i].Run(deltaTime);
 
-                switch (result) {
+                switch (result)
+                {
                     case RunStates.FAILURE:
                         continue;
                     case RunStates.SUCCESS:
@@ -18,8 +24,11 @@ namespace BehaviourTreeTests.BehaviorTree.Nodes {
                         return RunStates.RUNNING;
                 }
             }
-
             return RunStates.FAILURE;
+        }
+        public override string ToString()
+        {
+            return "Selector";
         }
     }
 }

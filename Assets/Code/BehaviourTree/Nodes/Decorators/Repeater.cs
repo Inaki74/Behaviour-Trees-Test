@@ -1,25 +1,31 @@
 namespace BehaviourTreeTests.BehaviorTree.Nodes {
     public class Repeater : Decorator {
-        public Repeater(Node node) : base(node) {}
-        public Repeater(Node node, int iterations) : base(node) 
+        public Repeater(DataContext context, Node node) : base(context, node) {}
+        public Repeater(DataContext context, Node node, int iterations) : base(context, node) 
         {
             _iterations = iterations;
         }
 
-        private int _iterations;
+        private int _iterations = -1;
         private int _currentIteration = 0;
 
-        public override RunStates Run(float deltaTime)
+        protected override RunStates InternalRun(float deltaTime)
         {
+            ResetIfNecessary();
+
             RunStates result = _child.Run(deltaTime);
 
             _currentIteration++;
 
-            if(_currentIteration == _iterations) {
+            if(_iterations != -1 && _currentIteration == _iterations) {
                 return result;
             }
 
             return RunStates.RUNNING;
+        }
+        public override string ToString()
+        {
+            return "Repeater";
         }
     }
 }

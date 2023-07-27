@@ -1,12 +1,19 @@
 namespace BehaviourTreeTests.BehaviorTree.Nodes {
     public class Succeeder : Decorator {
-        public Succeeder(Node node) : base(node) {}
+        public Succeeder(DataContext context, Node node) : base(context, node) {}
 
-        public override RunStates Run(float deltaTime)
+        protected override RunStates InternalRun(float deltaTime)
         {
+            ResetIfNecessary();
+
             RunStates result = _child.Run(deltaTime);
 
             return RunStates.SUCCESS;
+        }
+
+        public override string ToString()
+        {
+            return "Succeeder";
         }
     }
 }

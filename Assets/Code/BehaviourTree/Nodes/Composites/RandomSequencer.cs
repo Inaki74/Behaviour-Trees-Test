@@ -3,13 +3,17 @@ using BehaviourTreeTests.Utility;
 
 namespace BehaviourTreeTests.BehaviorTree.Nodes {
     public class RandomSequencer : Sequencer {
-        public RandomSequencer(List<Node> nodes) : base(nodes) {}
+        public RandomSequencer(DataContext context, List<Node> nodes) : base(context, nodes) {}
 
-        public override RunStates Run(float deltaTime)
+        protected override RunStates InternalRun(float deltaTime)
         {
             _children.Shuffle<Node>();
 
-            return base.Run(deltaTime);
+            return base.InternalRun(deltaTime);
+        }
+        public override string ToString()
+        {
+            return "RandomSequencer";
         }
     }
 }
